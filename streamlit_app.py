@@ -6,7 +6,7 @@ import os
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except (FileNotFoundError, KeyError):
-    GOOGLE_API_KEY = "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" # Sua Chave API
+    GOOGLE_API_KEY = "" # Sua Chave API
 
 # Verificação da Chave API
 api_key_valida = bool(GOOGLE_API_KEY and GOOGLE_API_KEY != "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL")
