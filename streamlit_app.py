@@ -8,7 +8,7 @@ try:
 except FileNotFoundError:
     # ATENÇÃO: Para o GitHub, esta linha deve ser GOOGLE_API_KEY = ""
     # e a chave real deve estar nos Secrets do Streamlit Cloud.
-    GOOGLE_API_KEY = "" 
+    GOOGLE_API_KEY = "" # Substitua por "" se não estiver usando o Streamlit Cloud. 
 
 if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY: 
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
@@ -196,7 +196,7 @@ if st.button("Gerar Plano de Estudos com IA 🧠", key="botao_gerar_inicial"):
             
             st.session_state.plano_atual = plano_gerado
             st.session_state.feedback_do_aluno = "" 
-            # A tentativa de limpar st.session_state.widget_feedback_key = "" foi removida daqui
+            # A linha que tentava limpar st.session_state.widget_feedback_key = "" foi REMOVIDA daqui.
             st.success("Plano inicial gerado com sucesso!")
         else:
             st.error("Não foi possível gerar o plano inicial. Verifique as configurações e tente novamente.")
@@ -205,9 +205,6 @@ if st.button("Gerar Plano de Estudos com IA 🧠", key="botao_gerar_inicial"):
         st.warning("Por favor, informe quantas horas por dia você pode estudar antes de gerar o plano.")
 
 # --- Seção para Feedback e Adaptação do Plano ---
-# As linhas de DEBUG foram removidas para a versão final.
-# Elas podem ser adicionadas novamente se necessário para futuras investigações.
-
 if st.session_state.get('plano_atual'): 
     st.divider() 
     st.subheader("📝 Como foi seu progresso com o plano acima?") 
@@ -244,11 +241,11 @@ if st.session_state.get('plano_atual'):
                 
                 st.session_state.plano_atual = novo_plano_adaptado
                 st.session_state.feedback_do_aluno = "" 
-                # A linha st.session_state.widget_feedback_key = "" foi REMOVIDA daqui.
+                # A linha st.session_state.widget_feedback_key = "" foi REMOVIDA daqui para evitar o erro.
                 st.success("Seu plano foi adaptado com sucesso!")
                 st.balloons()
             else:
                 st.error("Não foi possível adaptar o plano. Tente novamente.")
 
 # --- Informações na Barra Lateral ---
-st.sidebar.info("Cronos ENEM - Protótipo v0.3")
+st.sidebar.info("Cronos ENEM - Protótipo v0.3") # Mudei para v0.3 para refletir as melhorias
