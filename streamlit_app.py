@@ -265,8 +265,7 @@ if st.session_state.get('plano_atual'):
                 st.session_state.plano_atual = novo_plano_adaptado
                 st.session_state.feedback_do_aluno = ""
                 if "widget_feedback_key" in st.session_state: # Para limpar o widget text_area
-                
-                st.success("Seu plano foi adaptado com sucesso!")
+                    st.success("Seu plano foi adaptado com sucesso!")
                 st.balloons()
             else:
                 st.error("Não foi possível adaptar o plano. Tente novamente.")
