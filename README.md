@@ -1,3 +1,53 @@
+# Cronos ENEM: Inteligência Artificial a Favor do Seu Futuro
+
+Olá! Sou Daniel Valentim, Biólogo e Mestre em Biodiversidade Tropical, também um entusiasta da tecnologia que acredita no poder da inovação para transformar vidas. Desenvolvi o **_Cronos ENEM_** com um propósito muito especial: tornar a preparação para o ENEM acessível para *todos*, especialmente para quem não tem condições de investir em cursinhos caros.
+
+## A Luta da Preparação e Nosso Propósito Social
+
+Sabemos que estudar para o ENEM é um grande desafio. É preciso ter disciplina, material de qualidade e um plano de estudos que realmente funcione. Infelizmente, o acesso a tudo isso muitas vezes depende de quanto se pode pagar. **Muitos talentos ficam para trás não por falta de capacidade, mas por falta de oportunidade e ferramentas adequadas.**
+
+O **_Cronos ENEM_** nasceu para mudar essa realidade. Ele é mais que um app; é um projeto com **impacto social**, feito para ser seu *aliado gratuito* nessa jornada.
+
+## Como o **_Cronos ENEM_** Trabalha por Você?
+
+Nosso app utiliza o que há de mais moderno em inteligência artificial, a **API Gemini do Google**, para oferecer um suporte de estudo *verdadeiramente personalizado e adaptativo*.
+
+* **Seu Plano, Sua Medida:** Em vez de seguir um modelo pronto, o **_Cronos ENEM_** conversa com você, entende sua rotina, suas facilidades e, principalmente, suas dificuldades em cada matéria. Com base nisso, ele cria um **cronograma de estudos único e flexível**, que se encaixa perfeitamente no seu dia a dia.
+* **Adaptação em Tempo Real:** A vida acontece, e imprevistos surgem. Se você ficou doente, teve um dia puxado ou sentiu que precisa revisar mais um tópico, o **_Cronos ENEM_** *ajusta seu plano automaticamente*. Ele te ajuda a manter o foco sem se sentir sobrecarregado.
+* **Identificação de Pontos Fracos:** Nossa IA vai te ajudar a perceber onde você precisa dedicar mais tempo e esforço, sugerindo revisões e materiais específicos para **superar suas dificuldades** e fortalecer seu aprendizado.
+* **Democratizando o Acesso:** Acreditamos que a educação de qualidade deve ser para todos. O **_Cronos ENEM_** oferece uma ferramenta poderosa de planejamento e acompanhamento de estudos, que antes seria cara, **agora disponível gratuitamente**, quebrando barreiras financeiras na busca pelo seu sonho de entrar na universidade.
+
+## O Significado por Trás do Nome
+
+Escolhemos **_Cronos_** (o deus do tempo na mitologia) porque gerenciar o tempo é fundamental na preparação para o ENEM. Nosso app te dá o *controle* sobre seu tempo de estudo, transformando essa preocupação em uma **estratégia vencedora**.
+
+## Tecnologia por Trás da Inovação Social
+
+Para construir o **_Cronos ENEM_**, utilizamos a **API Gemini do Google**, que é o coração da nossa inteligência adaptativa. A interface amigável e acessível que você vê e usa foi desenvolvida com a agilidade do **Streamlit**.
+
+## Como Começar a Usar (Simulando a Experiência)
+
+1.  Visite a página do **_Cronos ENEM_** [Link do App - *Se o link estiver online, insira-o aqui*].
+2.  Na primeira vez, o app fará algumas perguntas para entender seu perfil de estudante e sua rotina.
+3.  Pronto! Seu primeiro plano de estudos personalizado será gerado.
+4.  Use o app diariamente para registrar seu progresso, dar feedback sobre as aulas e exercícios, e ver seu plano se ajustar para te ajudar cada vez mais.
+
+## Nosso Compromisso com o Futuro
+
+Este é apenas o começo. Queremos continuar aprimorando o **_Cronos ENEM_**, adicionando novas funcionalidades e conteúdos para que ele seja a *ferramenta mais completa e acessível* para sua preparação.
+
+## Uma Iniciativa Nascida para Impactar
+
+Este projeto é fruto da **Imersão IA 2025 da Alura**, com o inestimável apoio do Google. Ele representa minha paixão por usar a tecnologia para construir um futuro mais justo e com mais oportunidades para todos. É minha contribuição inicial para o desenvolvimento de soluções que fazem a diferença na vida das pessoas.
+
+---
+
+## Referência Científica
+
+Hwang, G.-J., & Xie, H. (2021). Applications and Trends of Artificial Intelligence in Education: a Review of Recent Studies. *Interactive Learning Environments*, *29*(6), 689-703. doi:10.1080/10494820.2019.1625891
+
+---
+--------------------------------- Texto resumido -----------------------
 **Nome do Projeto:** 
 
 Cronos ENEM
