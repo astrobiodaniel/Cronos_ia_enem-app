@@ -8,7 +8,7 @@ try:
 except FileNotFoundError:
     GOOGLE_API_KEY = "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" # LEMBRETE: Para GitHub, use "" ou placeholder
 
-if GOOGLE_API_KEY == "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" or not GOOGLE_API_KEY: 
+if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY: 
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
     st.stop()
 
@@ -230,7 +230,7 @@ if st.session_state.get('plano_atual'):
                 st.session_state.plano_atual = novo_plano_adaptado
                 st.session_state.feedback_do_aluno = ""
                 if "widget_feedback_key" in st.session_state: # Para limpar o widget text_area
-                    st.session_state.widget_feedback_key = ""
+                
                 st.success("Seu plano foi adaptado com sucesso!")
                 st.balloons()
             else:
