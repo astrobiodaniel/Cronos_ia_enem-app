@@ -27,7 +27,7 @@ Para construir o **_Cronos ENEM_**, utilizamos a **API Gemini do Google**, que �
 
 ## Como Começar a Usar (Simulando a Experiência)
 
-1.  Visite a página do **_Cronos ENEM_** [\[[Link do App - *Se o link estiver online, insira-o aqui*](https://astrobiodaniel-cronos-ia-enem-app-streamlit-app-guobpe.streamlit.app/)\]]
+1.  Visite a página do [\[[**_Cronos ENEM_** ](https://astrobiodaniel-cronos-ia-enem-app-streamlit-app-guobpe.streamlit.app/)\]]
 2.  Na primeira vez, o app fará algumas perguntas para entender seu perfil de estudante e sua rotina.
 3.  Pronto! Seu primeiro plano de estudos personalizado será gerado.
 4.  Use o app diariamente para registrar seu progresso, dar feedback sobre as aulas e exercícios, e ver seu plano se ajustar para te ajudar cada vez mais.
