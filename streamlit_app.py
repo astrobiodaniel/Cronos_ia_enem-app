@@ -6,7 +6,7 @@ import os
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except FileNotFoundError:
-    GOOGLE_API_KEY = "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" # LEMBRETE: Para GitHub, use "" ou placeholder
+    GOOGLE_API_KEY = "" # LEMBRETE: Para GitHub, use "" ou placeholder
 
 if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY: 
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
