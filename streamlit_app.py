@@ -6,9 +6,9 @@ import os
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except FileNotFoundError:
-    GOOGLE_API_KEY = "" # LEMBRETE: Para GitHub, use "" ou placeholder
+    GOOGLE_API_KEY = "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" # LEMBRETE: Para GitHub, use "" ou placeholder
 
-if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY: 
+if GOOGLE_API_KEY == "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" or not GOOGLE_API_KEY: 
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
     st.stop()
 
@@ -207,6 +207,17 @@ if st.session_state.get('plano_atual'):
             }
             plano_para_adaptar = st.session_state.plano_atual
             feedback_do_aluno_para_adaptar = st.session_state.feedback_do_aluno
+
+
+            st.markdown("---") # Linha divisória para o debug
+            st.write("DEBUG - TENTANDO ADAPTAR (para 3ª semana ou mais):")
+            st.write(f"Metas Originais Enviadas para IA: {metas_atuais}")
+            st.write(f"Plano Anterior Enviado para IA (deveria ser da 2ª semana em diante):")
+            st.text(plano_para_adaptar) # Usar st.text para exibir strings longas de forma mais crua
+            st.write(f"Feedback do Aluno Enviado para IA (sobre a 2ª semana em diante): '{feedback_do_aluno_para_adaptar}'")
+            st.markdown("---")
+
+
 
             with st.spinner("O Cronos IA está ADAPTANDO seu plano... Isso pode levar um momento! 🧠✨"):
                 novo_plano_adaptado = gerar_plano_adaptado_com_gemini(
