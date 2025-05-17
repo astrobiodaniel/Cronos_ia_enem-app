@@ -6,7 +6,9 @@ import os
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except FileNotFoundError:
-    GOOGLE_API_KEY = "" # LEMBRETE: Para GitHub, use "" ou placeholder
+    # ATENÇÃO: Para o GitHub, esta linha deve ser GOOGLE_API_KEY = ""
+    # e a chave real deve estar nos Secrets do Streamlit Cloud.
+    GOOGLE_API_KEY = "" # Substitua por "" se não estiver usando o Streamlit Cloud. 
 
 if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY: 
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
@@ -39,6 +41,14 @@ def gerar_plano_estudos_com_gemini(meta_nota, dias_semana, horas_dia_str, materi
     E assim por diante para os outros dias planejados.
     Apresente o conteúdo de cada dia em formato de tópicos (markdown) para fácil leitura.
     Lembre o aluno da importância de pausas e revisões (pode ser na introdução ou no final do plano).
+    Para a Sexta-feira, após o conteúdo de estudo planejado, inclua a seguinte seção de observações importantes:
+    ### 📝 Observações Importantes para sua Sexta-feira e Fim de Semana:
+    - Este é um plano inicial, adaptável às suas necessidades.
+    - Utilize materiais didáticos adequados ao nível do ENEM.
+    - Resolva muitas questões de provas anteriores para simular a prova e identificar seus pontos fracos.
+    - Procure por videoaulas e materiais complementares online para auxiliar nos assuntos que apresentar maior dificuldade.
+    - A revisão semanal é crucial para consolidar o conhecimento adquirido.
+    - Não se esqueça de incluir pausas regulares durante seus estudos para evitar o esgotamento mental. Um descanso adequado é tão importante quanto o estudo em si.
     """
     try:
         model = genai.GenerativeModel('gemini-1.5-flash-latest')
@@ -78,8 +88,19 @@ O novo plano deve:
 6. Se o aluno estiver progredindo bem, sugira avanços ou desafios moderados.
 
 Apresente o novo plano em formato de tópicos (markdown) para fácil leitura. 
+Para cada dia da semana do plano, comece a seção do dia com um título de cabeçalho markdown de nível 3, seguido do nome do dia. Por exemplo:
+### Segunda-feira
+[Conteúdo da Segunda-feira aqui]
 No início do plano, inclua uma breve análise do progresso do aluno (baseada no feedback) e explique as principais mudanças ou focos para a nova semana em relação ao plano anterior, se relevante.
 Finalize com uma mensagem de encorajamento.
+Para a Sexta-feira, após o conteúdo de estudo planejado, inclua a seguinte seção de observações importantes:
+### 📝 Observações Importantes para sua Sexta-feira e Fim de Semana:
+- Este é um plano inicial, adaptável às suas necessidades.
+- Utilize materiais didáticos adequados ao nível do ENEM.
+- Resolva muitas questões de provas anteriores para simular a prova e identificar seus pontos fracos.
+- Procure por videoaulas e materiais complementares online para auxiliar nos assuntos que apresentar maior dificuldade.
+- A revisão semanal é crucial para consolidar o conhecimento adquirido.
+- Não se esqueça de incluir pausas regulares durante seus estudos para evitar o esgotamento mental. Um descanso adequado é tão importante quanto o estudo em si.
 """
     try:
         model = genai.GenerativeModel('gemini-1.5-flash-latest')
@@ -101,7 +122,7 @@ def exibir_plano_formatado(texto_do_plano, titulo_da_secao_principal):
         dias_do_plano_formatados = []
 
         if secoes_plano:
-            if not texto_do_plano.strip().startswith("### ") and len(secoes_plano) > 0:
+            if not texto_do_plano.strip().startswith("### ") and len(secoes_plano) > 0 and secoes_plano[0].strip():
                 introducao_do_plano = secoes_plano[0]
                 dias_do_plano_formatados = secoes_plano[1:]
             else:
@@ -112,13 +133,18 @@ def exibir_plano_formatado(texto_do_plano, titulo_da_secao_principal):
                 st.divider()
 
             for i, bloco_dia_texto in enumerate(dias_do_plano_formatados):
-                if not bloco_dia_texto.strip():
+                bloco_dia_limpo = bloco_dia_texto.strip()
+                if not bloco_dia_limpo:
                     continue
-                partes_do_dia = bloco_dia_texto.split('\n', 1)
-                titulo_dia = partes_do_dia[0].strip()
+                
+                partes_do_dia = bloco_dia_limpo.split('\n', 1)
+                titulo_dia = partes_do_dia[0].strip().replace("### ", "")
+                
                 conteudo_do_dia = partes_do_dia[1].strip() if len(partes_do_dia) > 1 else ""
+                
                 texto_markdown_para_dia = f"### {titulo_dia}\n{conteudo_do_dia}"
-                expandir_este = (i == 0)
+                
+                expandir_este = (i == 0) 
                 with st.expander(label=f"🗓️ {titulo_dia}", expanded=expandir_este):
                     st.markdown(texto_markdown_para_dia)
     elif texto_do_plano is not None: 
@@ -129,12 +155,10 @@ if 'plano_atual' not in st.session_state:
     st.session_state.plano_atual = None
 if 'feedback_do_aluno' not in st.session_state:
     st.session_state.feedback_do_aluno = ""
-if 'plano_adaptado' not in st.session_state: 
-    st.session_state.plano_adaptado = None
 
 # --- Interface Principal ---
 st.title("Cronos - Seu Assistente Pessoal de Estudos para o ENEM")
-st.image("https://i.imgur.com/4X9v1gM.png", width=300)
+st.image("https://i.imgur.com/4X9v1gM.png", width=300) 
 st.write("""
 Bem-vindo(a) ao seu assistente pessoal de estudos para o ENEM!
 Vamos configurar seu plano de estudos personalizado.
@@ -171,9 +195,8 @@ if st.button("Gerar Plano de Estudos com IA 🧠", key="botao_gerar_inicial"):
             exibir_plano_formatado(plano_gerado, "🌟 Seu Plano de Estudos Personalizado (1ª Semana): 🌟")
             
             st.session_state.plano_atual = plano_gerado
-            st.session_state.feedback_do_aluno = ""
-            if "widget_feedback_key" in st.session_state:
-                 st.session_state.widget_feedback_key = "" 
+            st.session_state.feedback_do_aluno = "" 
+            # A linha que tentava limpar st.session_state.widget_feedback_key = "" foi REMOVIDA daqui.
             st.success("Plano inicial gerado com sucesso!")
         else:
             st.error("Não foi possível gerar o plano inicial. Verifique as configurações e tente novamente.")
@@ -207,18 +230,7 @@ if st.session_state.get('plano_atual'):
             }
             plano_para_adaptar = st.session_state.plano_atual
             feedback_do_aluno_para_adaptar = st.session_state.feedback_do_aluno
-
-
-            st.markdown("---") # Linha divisória para o debug
-            st.write("DEBUG - TENTANDO ADAPTAR (para 3ª semana ou mais):")
-            st.write(f"Metas Originais Enviadas para IA: {metas_atuais}")
-            st.write(f"Plano Anterior Enviado para IA (deveria ser da 2ª semana em diante):")
-            st.text(plano_para_adaptar) # Usar st.text para exibir strings longas de forma mais crua
-            st.write(f"Feedback do Aluno Enviado para IA (sobre a 2ª semana em diante): '{feedback_do_aluno_para_adaptar}'")
-            st.markdown("---")
-
-
-
+            
             with st.spinner("O Cronos IA está ADAPTANDO seu plano... Isso pode levar um momento! 🧠✨"):
                 novo_plano_adaptado = gerar_plano_adaptado_com_gemini(
                     metas_atuais, plano_para_adaptar, feedback_do_aluno_para_adaptar
@@ -228,13 +240,12 @@ if st.session_state.get('plano_atual'):
                 exibir_plano_formatado(novo_plano_adaptado, "✨ Seu Novo Plano de Estudos ADAPTADO: ✨")
                 
                 st.session_state.plano_atual = novo_plano_adaptado
-                st.session_state.feedback_do_aluno = ""
-                if "widget_feedback_key" in st.session_state: # Para limpar o widget text_area
-                
+                st.session_state.feedback_do_aluno = "" 
+                # A linha st.session_state.widget_feedback_key = "" foi REMOVIDA daqui para evitar o erro.
                 st.success("Seu plano foi adaptado com sucesso!")
                 st.balloons()
             else:
                 st.error("Não foi possível adaptar o plano. Tente novamente.")
 
 # --- Informações na Barra Lateral ---
-st.sidebar.info("Cronos ENEM - Protótipo v0.2")
+st.sidebar.info("Cronos ENEM - Protótipo v0.3") # Mudei para v0.3 para refletir as melhorias
