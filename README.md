@@ -62,4 +62,4 @@ O Cronos ENEM busca democratizar o acesso a um planejamento de estudos de alta q
 Daniel Valentim
 
 **Link para o App Online:** 
-(Coloque o link do seu app no Streamlit Cloud aqui\!)
+(https://astrobiodaniel-cronos-ia-enem-app-streamlit-app-guobpe.streamlit.app/)
