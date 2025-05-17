@@ -6,7 +6,7 @@ import os
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except FileNotFoundError:
-    GOOGLE_API_KEY = "" # Substitua por "" se não estiver usando o Streamlit Cloud.
+    GOOGLE_API_KEY = "" # LEMBRETE: Para GitHub, use "" ou placeholder
 
 if GOOGLE_API_KEY == "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL" or not GOOGLE_API_KEY:
     st.error("Chave de API do Gemini não configurada. Verifique o código ou os Secrets do Streamlit Cloud.")
@@ -85,10 +85,7 @@ O novo plano deve:
 5. Manter o foco nas metas originais do aluno.
 6. Se o aluno estiver progredindo bem, sugira avanços ou desafios moderados.
 
-Apresente o novo plano em formato de tópicos (markdown) para fácil leitura.
-Para cada dia da semana do plano, comece a seção do dia com um título de cabeçalho markdown de nível 3, seguido do nome do dia. Por exemplo:
-### Segunda-feira
-[Conteúdo da Segunda-feira aqui]
+Apresente o novo plano em formato de tópicos (markdown) para fácil leitura. 
 No início do plano, inclua uma breve análise do progresso do aluno (baseada no feedback) e explique as principais mudanças ou focos para a nova semana em relação ao plano anterior, se relevante.
 Finalize com uma mensagem de encorajamento.
 Para a Sexta-feira, após o conteúdo de estudo planejado, inclua a seguinte seção de observações importantes:
@@ -135,14 +132,10 @@ def exibir_plano_formatado(texto_do_plano, titulo_da_secao_principal):
                 bloco_dia_limpo = bloco_dia_texto.strip()
                 if not bloco_dia_limpo:
                     continue
-
-                partes_do_dia = bloco_dia_limpo.split('\n', 1)
-                titulo_dia = partes_do_dia[0].strip().replace("### ", "")
-
+                partes_do_dia = bloco_dia_texto.split('\n', 1)
+                titulo_dia = partes_do_dia[0].strip()
                 conteudo_do_dia = partes_do_dia[1].strip() if len(partes_do_dia) > 1 else ""
-
                 texto_markdown_para_dia = f"### {titulo_dia}\n{conteudo_do_dia}"
-
                 expandir_este = (i == 0)
                 with st.expander(label=f"🗓️ {titulo_dia}", expanded=expandir_este):
                     st.markdown(texto_markdown_para_dia)
@@ -152,24 +145,14 @@ def exibir_plano_formatado(texto_do_plano, titulo_da_secao_principal):
 # --- Inicialização do st.session_state ---
 if 'plano_atual' not in st.session_state:
     st.session_state.plano_atual = None
-# if 'feedback_do_aluno' not in st.session_state: # Não vamos mais usar feedback_do_aluno dessa forma
-#    st.session_state.feedback_do_aluno = ""
-
-if 'semanas_foco_concluidas' not in st.session_state:
-    st.session_state.semanas_foco_concluidas = 0
-
-# NOVOS ESTADOS PARA O FEEDBACK INTERATIVO
-if 'radio_concluiu_tarefas' not in st.session_state: # Chave do widget st.radio
-    st.session_state.radio_concluiu_tarefas = "Sim, na maior parte!" # Valor inicial igual à primeira opção do radio
-if 'multi_materias_dificuldade' not in st.session_state: # Chave do widget st.multiselect
-    st.session_state.multi_materias_dificuldade = []
-if 'text_outros_comentarios' not in st.session_state: # Chave do widget st.text_area
-    st.session_state.text_outros_comentarios = ""
-
+if 'feedback_do_aluno' not in st.session_state:
+    st.session_state.feedback_do_aluno = ""
+if 'plano_adaptado' not in st.session_state: 
+    st.session_state.plano_adaptado = None
 
 # --- Interface Principal ---
 st.title("Cronos - Seu Assistente Pessoal de Estudos para o ENEM")
-st.image("https://i.imgur.com/4X9v1gM.png", width=300)
+st.image("https://i.imgur.com/4X9v1gM.png", width=300) 
 st.write("""
 Bem-vindo(a) ao seu assistente pessoal de estudos para o ENEM!
 Vamos configurar seu plano de estudos personalizado.
@@ -206,10 +189,9 @@ if st.button("Gerar Plano de Estudos com IA 🧠", key="botao_gerar_inicial"):
             exibir_plano_formatado(plano_gerado, "🌟 Seu Plano de Estudos Personalizado (1ª Semana): 🌟")
 
             st.session_state.plano_atual = plano_gerado
-            # Limpando os campos de feedback interativo, caso já tenham sido usados
-            st.session_state.radio_concluiu_tarefas = "Sim, na maior parte!"
-            st.session_state.multi_materias_dificuldade = []
-            st.session_state.text_outros_comentarios = ""
+            st.session_state.feedback_do_aluno = ""
+            if "widget_feedback_key" in st.session_state:
+                 st.session_state.widget_feedback_key = "" 
             st.success("Plano inicial gerado com sucesso!")
         else:
             st.error("Não foi possível gerar o plano inicial. Verifique as configurações e tente novamente.")
@@ -248,58 +230,46 @@ if st.session_state.get('plano_atual'):
     )
 
     if st.button("Gerar Plano Adaptado para Próxima Semana 🚀", key="botao_adaptar"):
-        # Construindo o feedback formatado para a IA
-        feedback_formatado_para_ia = f"""
-        Relatório de progresso da semana:
-        - Conseguiu seguir o plano de estudos desta semana? {st.session_state.radio_concluiu_tarefas}
-        - Matérias onde sentiu mais dificuldade esta semana: {', '.join(st.session_state.multi_materias_dificuldade) if st.session_state.multi_materias_dificuldade else 'Nenhuma específica relatada'}
-        - Outros comentários do aluno: {st.session_state.text_outros_comentarios if st.session_state.text_outros_comentarios.strip() else 'Nenhum'}
-        """
-
-        metas_atuais = {
-            'meta_nota': meta_nota,
-            'dias_semana': dias_semana,
-            'horas_dia_str': horas_dia_input.strftime('%H:%M') if horas_dia_input else "Não informado",
-            'materias_dificuldade': materias_dificuldade, # Dificuldades gerais do aluno
-            'materias_facilidade': materias_facilidade  # Facilidades gerais do aluno
-        }
-        plano_para_adaptar = st.session_state.plano_atual
-        feedback_do_aluno_para_adaptar = feedback_formatado_para_ia
-
-        with st.spinner("O Cronos IA está ADAPTANDO seu plano... Isso pode levar um momento! 🧠✨"):
-            novo_plano_adaptado = gerar_plano_adaptado_com_gemini(
-                metas_atuais, plano_para_adaptar, feedback_do_aluno_para_adaptar
-            )
-
-        if novo_plano_adaptado:
-            exibir_plano_formatado(novo_plano_adaptado, "✨ Seu Novo Plano de Estudos ADAPTADO: ✨")
-
-            st.session_state.plano_atual = novo_plano_adaptado
-            # Limpando os campos de feedback para a próxima semana
-            st.session_state.radio_concluiu_tarefas = "Sim, na maior parte!" # Reseta para o valor padrão
-            st.session_state.multi_materias_dificuldade = []
-            st.session_state.text_outros_comentarios = ""
-
-            st.session_state.semanas_foco_concluidas += 1
-
-            st.success(f"Seu plano foi adaptado com sucesso! Mais uma semana de foco registrada no seu Mural de Conquistas! 🎉 ({st.session_state.semanas_foco_concluidas} semana(s) no total!)")
-            st.balloons()
-            # Adicionado para forçar o rerender dos widgets de feedback com os valores resetados
-            st.experimental_rerun()
+        if not st.session_state.get('feedback_do_aluno', '').strip():
+            st.warning("Por favor, descreva seu progresso antes de gerar um plano adaptado.")
         else:
-            st.error("Não foi possível adaptar o plano. Tente novamente.")
+            metas_atuais = {
+                'meta_nota': meta_nota, 
+                'dias_semana': dias_semana,
+                'horas_dia_str': horas_dia_input.strftime('%H:%M') if horas_dia_input else "Não informado",
+                'materias_dificuldade': materias_dificuldade, 
+                'materias_facilidade': materias_facilidade
+            }
+            plano_para_adaptar = st.session_state.plano_atual
+            feedback_do_aluno_para_adaptar = st.session_state.feedback_do_aluno
 
-# --- Barra Lateral com Conquistas e Informações ---
-st.sidebar.title("🏆 Meu Mural de Conquistas 🏆")
 
-estrelas = "✨" * st.session_state.semanas_foco_concluidas
-if st.session_state.semanas_foco_concluidas > 0:
-    st.sidebar.write(f"Semanas de Foco Concluídas: {st.session_state.semanas_foco_concluidas}")
-    st.sidebar.markdown(f"<p style='font-size: 24px; text-align: center;'>{estrelas}</p>", unsafe_allow_html=True)
-else:
-    st.sidebar.write("Complete sua primeira semana adaptada para começar a colecionar estrelas! ⭐")
+            st.markdown("---") # Linha divisória para o debug
+            st.write("DEBUG - TENTANDO ADAPTAR (para 3ª semana ou mais):")
+            st.write(f"Metas Originais Enviadas para IA: {metas_atuais}")
+            st.write(f"Plano Anterior Enviado para IA (deveria ser da 2ª semana em diante):")
+            st.text(plano_para_adaptar) # Usar st.text para exibir strings longas de forma mais crua
+            st.write(f"Feedback do Aluno Enviado para IA (sobre a 2ª semana em diante): '{feedback_do_aluno_para_adaptar}'")
+            st.markdown("---")
 
-st.sidebar.divider()
 
-versao_app = "v0.5" # Atualize se desejar
-st.sidebar.info(f"Cronos ENEM - Protótipo {versao_app} (com Feedback Interativo!)")
+
+            with st.spinner("O Cronos IA está ADAPTANDO seu plano... Isso pode levar um momento! 🧠✨"):
+                novo_plano_adaptado = gerar_plano_adaptado_com_gemini(
+                    metas_atuais, plano_para_adaptar, feedback_do_aluno_para_adaptar
+                )
+
+            if novo_plano_adaptado:
+                exibir_plano_formatado(novo_plano_adaptado, "✨ Seu Novo Plano de Estudos ADAPTADO: ✨")
+                
+                st.session_state.plano_atual = novo_plano_adaptado
+                st.session_state.feedback_do_aluno = ""
+                if "widget_feedback_key" in st.session_state: # Para limpar o widget text_area
+                
+                st.success("Seu plano foi adaptado com sucesso!")
+                st.balloons()
+            else:
+                st.error("Não foi possível adaptar o plano. Tente novamente.")
+
+# --- Informações na Barra Lateral ---
+st.sidebar.info("Cronos ENEM - Protótipo v0.2")
