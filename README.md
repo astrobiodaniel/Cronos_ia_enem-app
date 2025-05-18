@@ -10,9 +10,14 @@ O **_Cronos ENEM_** nasceu para mudar essa realidade. Ele é mais que um app; é
 
 ## Como o **_Cronos ENEM_** Trabalha por Você? 
 
-Vídeo explicando
-(https://youtu.be/nLzlqno4Tuc)
- 
+## Demonstração em Vídeo
+
+Confira a [demonstração do Cronos ENEM em vídeo](https://youtu.be/nLzlqno4Tuc) para ver o app em ação!
+
+## Comentários em Podcast
+
+Acompanhe nossos comentários em [podcast](https://notebooklm.google.com/notebook/90deda3f-dc96-4936-a59b-3887e3d1e967/audio).
+\
 
 Nosso app utiliza o que há de mais moderno em inteligência artificial, a **API Gemini do Google**, para oferecer um suporte de estudo *verdadeiramente personalizado e adaptativo*.
 
