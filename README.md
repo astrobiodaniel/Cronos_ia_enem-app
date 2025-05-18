@@ -8,7 +8,11 @@ Sabemos que estudar para o ENEM é um grande desafio. É preciso ter disciplina,
 
 O **_Cronos ENEM_** nasceu para mudar essa realidade. Ele é mais que um app; é um projeto com **impacto social**, feito para ser seu *aliado gratuito* nessa jornada.
 
-## Como o **_Cronos ENEM_** Trabalha por Você?
+## Como o **_Cronos ENEM_** Trabalha por Você? 
+
+Vídeo explicando
+(https://youtu.be/nLzlqno4Tuc)
+ 
 
 Nosso app utiliza o que há de mais moderno em inteligência artificial, a **API Gemini do Google**, para oferecer um suporte de estudo *verdadeiramente personalizado e adaptativo*.
 
