@@ -44,13 +44,6 @@ Este é apenas o começo. Queremos continuar aprimorando o **_Cronos ENEM_**, ad
 
 Este projeto é fruto da **Imersão IA 2025 da Alura**, com o inestimável apoio do Google. Ele representa minha paixão por usar a tecnologia para construir um futuro mais justo e com mais oportunidades para todos. É minha contribuição inicial para o desenvolvimento de soluções que fazem a diferença na vida das pessoas.
 
----
-
-## Referência Científica
-
-Hwang, G.-J., & Xie, H. (2021). Applications and Trends of Artificial Intelligence in Education: a Review of Recent Studies. *Interactive Learning Environments*, *29*(6), 689-703. doi:10.1080/10494820.2019.1625891
-
----
 --------------------------------- Texto resumido -----------------------
 **Nome do Projeto:** 
 
