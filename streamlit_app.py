@@ -338,7 +338,7 @@ if st.session_state.get('plano_atual'):
         st.rerun() # SUBSTITUÍDO experimental_rerun por rerun
 
 # --- Barra Lateral com Conquistas e Informações ---
-st.sidebar.title("🏆 Meu Mural de Conquistas 🏆")
+st.sidebar.title("Mural de Conquistas")
 estrelas = "✨" * st.session_state.semanas_foco_concluidas
 if st.session_state.semanas_foco_concluidas > 0:
     st.sidebar.write(f"Semanas de Foco Concluídas: {st.session_state.semanas_foco_concluidas}")
