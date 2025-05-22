@@ -2,15 +2,37 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
+# --- Interface Principal ---
+st.set_page_config(page_title="Cronos ENEM", layout="wide")
+
+st.image("https://i.imgur.com/Lm4TFfy.png", width=300) # Sua logomarca
+
+st.title("Cronos - Seu Assistente Pessoal de Estudos para o ENEM")
+st.write("""
+Bem-vindo(a) ao seu assistente pessoal de estudos para o ENEM!
+Vamos configurar seu plano de estudos personalizado.
+""")
+
+
+st.markdown(
+    """
+    <head>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#1E88E5">
+    </head>
+    """,
+    unsafe_allow_html=True
+)
+
 # --- Configuração da API Key do Gemini ---
 try:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 except (FileNotFoundError, KeyError):
-    GOOGLE_API_KEY = "" # Sua Chave API
+    GOOGLE_API_KEY = "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o" # Sua Chave API
 
 # Verificação da Chave API
 api_key_valida = bool(GOOGLE_API_KEY and GOOGLE_API_KEY != "SUA_CHAVE_API_AQUI_PARA_TESTE_LOCAL")
-if os.getenv("STREAMLIT_SERVER_RUNNING_ON_CLOUD") == "true" and GOOGLE_API_KEY == "AIzaSyACnFnEq6EGOhSrBtxOR2LiOC7RbeKoo1o":
+if os.getenv("STREAMLIT_SERVER_RUNNING_ON_CLOUD") == "true" and GOOGLE_API_KEY == "":
     st.warning("Atenção: Usando chave API de fallback na nuvem. Verifique a configuração dos Secrets.")
 
 if not api_key_valida:
@@ -211,16 +233,6 @@ def acao_gerar_plano_adaptado(metas_cb, plano_anterior_cb, feedback_cb):
     else:
         st.session_state.status_geracao = "adaptado_erro"
 
-# --- Interface Principal ---
-st.set_page_config(page_title="Cronos ENEM", layout="wide")
-
-st.image("https://i.imgur.com/Lm4TFfy.png", width=300) # Sua logomarca
-
-st.title("Cronos - Seu Assistente Pessoal de Estudos para o ENEM")
-st.write("""
-Bem-vindo(a) ao seu assistente pessoal de estudos para o ENEM!
-Vamos configurar seu plano de estudos personalizado.
-""")
 
 # --- Coleta de Informações do Aluno (usando st.form) ---
 with st.form(key="form_infos_aluno"):
